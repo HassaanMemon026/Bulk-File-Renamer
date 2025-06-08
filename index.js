@@ -20,14 +20,16 @@ try {
             for (let index = 0; index < data.length; index++) {
                 const item = data[index];
                 const oldFileName = path.join(folder, item)
-                const newFileName = path.join(folder, item.replaceAll(replaceThis, replaceWith));
+                const regex = new RegExp(replaceThis, 'g'); // 'g' means global replace
+                const newFileName = path.join(folder, item.replace(regex, replaceWith));
+
                 if (!preview) {
-                    if  (oldFileName !== newFileName) {
+                    if (oldFileName !== newFileName) {
                         fs.rename(oldFileName, newFileName, (err) => {
                             if (err) {
                                 console.error(err);
                             } else {
-                                console.log("Renamed: " +folder+"/" + item + " to " + newFileName);
+                                console.log("Renamed: " + folder + "/" + item + " to " + newFileName);
                                 console.log(oldFileName)
                                 console.log(newFileName)
                             }
